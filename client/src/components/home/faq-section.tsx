@@ -210,7 +210,7 @@ export default function FaqSection() {
 
   return (
     <section
-      className="relative z-50 py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-muted/40 to-background"
+      className="relative py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-muted/40 to-background"
       aria-labelledby="faq-heading"
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />

@@ -29,7 +29,7 @@ export default function MobileMenu({ isOpen, onClose, onNavigate }: MobileMenuPr
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="md:hidden bg-background w-full absolute z-50 shadow-lg border-b rounded-b-lg"
+          className="md:hidden w-full absolute z-50 rounded-b-lg border-b border-border/60 bg-background/95 shadow-[0_18px_40px_-24px_rgba(15,23,42,0.32)] supports-[backdrop-filter]:bg-background/58 supports-[backdrop-filter]:backdrop-blur-lg"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
