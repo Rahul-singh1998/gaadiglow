@@ -1,0 +1,290 @@
+/* Premium booking form background and glass utilities */
+.booking-bg-gradient {
+  @apply bg-gradient-to-br from-blue-50 via-purple-50 to-white;
+}
+.blurred-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(64px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.glass-card {
+  @apply bg-white/70 dark:bg-card/80 backdrop-blur-2xl border border-white/40 dark:border-border/40 shadow-[0_8px_32px_0_rgba(31,38,135,0.12),0_1.5px_8px_0_rgba(80,120,255,0.08)] hover:shadow-[0_16px_48px_0_rgba(31,38,135,0.18),0_2px_12px_0_rgba(80,120,255,0.12)] transition-all duration-500 ring-1 ring-primary/10 ring-inset hover:ring-2 hover:ring-primary/20;
+  border-radius: 2.2rem;
+}
+.glow-border {
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.12), 0 0 16px 0 hsl(var(--primary) / 0.10);
+}
+.input-gradient-border {
+  background: linear-gradient(120deg, hsl(var(--primary)/0.18), hsl(var(--accent)/0.10), hsl(var(--primary)/0.10));
+}
+.input-focus-glow {
+  box-shadow: 0 0 0 3px hsl(var(--primary)/0.18), 0 2px 8px 0 hsl(var(--primary)/0.10);
+}
+.input-bg-tint {
+  background: linear-gradient(120deg, hsl(var(--primary)/0.03), hsl(var(--accent)/0.02), #fff 80%);
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --muted: 210 40% 98%;
+  --muted-foreground: 215.4 16.3% 35%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --primary: 207 90% 54%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 84% 4.9%;
+  --accent: 45 100% 51%;
+  --accent-foreground: 222.2 84% 4.9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+  
+  /* Custom GaadiGlow colors */
+  --darkblue: 213 94% 68%;
+  --lightgray: 210 40% 96%;
+  --mediumgray: 215.4 16.3% 46.9%;
+  --darkgray: 222.2 84% 4.9%;
+  --glass: 0 0 60;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --primary: 207 90% 54%;
+  --primary-foreground: 222.2 84% 4.9%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --accent: 45 100% 51%;
+  --accent-foreground: 222.2 84% 4.9%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 212.7 26.8% 83.9%;
+  
+  /* Custom GaadiGlow colors for dark mode */
+  --darkblue: 213 94% 68%;
+  --lightgray: 217.2 32.6% 17.5%;
+  --mediumgray: 215 20.2% 65.1%;
+  --darkgray: 210 40% 98%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html, body {
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  #root {
+    height: auto;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+  
+  html {
+    transition: none !important;
+  }
+  
+  html * {
+    transition: none !important;
+  }
+  
+  .transition-theme {
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+}
+
+@layer utilities {
+  .bg-primary {
+    background-color: hsl(var(--primary));
+  }
+  
+  .bg-secondary {
+    background-color: hsl(var(--secondary));
+  }
+  
+  .bg-darkblue {
+    background-color: hsl(var(--darkblue));
+  }
+  
+  .bg-lightgray {
+    background-color: hsl(var(--lightgray));
+  }
+  .bg-accent {
+    background-color: hsl(var(--accent));
+  }
+  
+  .text-primary {
+    color: hsl(var(--primary));
+  }
+  
+  .text-accent {
+    color: hsl(var(--accent));
+  }
+  
+  .text-darkgray {
+    color: hsl(var(--darkgray));
+  }
+  
+  .text-mediumgray {
+    color: hsl(var(--mediumgray));
+  }
+  
+  .border-mediumgray {
+    border-color: hsl(var(--mediumgray));
+  }
+}
+
+/* Scrollbar styles (works without plugins) */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollbar-custom:hover {
+  scrollbar-color: hsl(var(--primary) / 0.35) transparent;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 9999px;
+  transition: background-color 0.2s;
+}
+
+.scrollbar-custom:hover::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--primary) / 0.35);
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--primary) / 0.55);
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 9999px;
+}
+
+/* Golden animated border for "Most Popular" card */
+.golden-border-wrapper {
+  position: relative;
+  border-radius: 1rem;
+  padding: 2px;
+  isolation: isolate;
+}
+
+.golden-border-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    #fbbf24,
+    #f59e0b,
+    #d97706,
+    #fbbf24,
+    #fde68a,
+    #fbbf24
+  );
+  animation: rotateBorder 4s linear infinite;
+  z-index: -2;
+}
+
+.golden-border-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    #fbbf24,
+    #f59e0b,
+    #d97706,
+    #fbbf24,
+    #fde68a,
+    #fbbf24
+  );
+  animation: rotateBorder 4s linear infinite;
+  filter: blur(10px);
+  opacity: 0.4;
+  z-index: -3;
+  transition: opacity 0.3s ease;
+}
+
+.golden-border-wrapper:hover::after {
+  opacity: 0.65;
+}
+
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotateBorder {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+/* Testimonial marquee */
+.testimonial-marquee {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  will-change: transform;
+  animation: scroll-marquee 30s linear infinite;
+}
+
+@media (min-width: 640px) {
+  .marquee-track {
+    animation-duration: 25s;
+  }
+}
+
+.testimonial-marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
