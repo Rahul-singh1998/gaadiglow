@@ -3,6 +3,7 @@ import ServicesSection from "@/components/home/services-section";
 import HowItWorks from "@/components/home/how-it-works";
 import TestimonialsSection from "@/components/home/testimonials";
 import FaqSection from "@/components/home/faq-section";
+import ServiceAreaSection from "@/components/home/service-area";
 import { Helmet } from "react-helmet";
 
 export default function HomePage() {
@@ -29,6 +30,7 @@ export default function HomePage() {
         <HowItWorks />
         <TestimonialsSection />
         <FaqSection />
+        <ServiceAreaSection />
       </div>
     </>
   );

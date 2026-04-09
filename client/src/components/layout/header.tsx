@@ -47,7 +47,7 @@ export default function Header() {
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/75 to-transparent dark:via-white/30"
         />
         <div className="container mx-auto py-3 px-4 md:px-8 flex items-center justify-between">
-          <Link href="https://www.gaadiglow.com/" className="flex items-center">
+          <Link href="/" className="flex items-center">
             <span className="text-primary font-bold text-xl md:text-2xl">
               Gaadi<span className="text-yellow-400">Glow</span>
             </span>

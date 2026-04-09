@@ -1,5 +1,5 @@
 ﻿import { Button } from "@/components/ui/button";
-import { Check, Clock, ArrowRight, ChevronDown } from "lucide-react";
+import { Check, Clock, ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
 import {
   type Service,
@@ -8,7 +8,7 @@ import {
   VEHICLE_LABELS,
   type ServicePrice,
 } from "@/constants/services";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 // Append width/fill to a Cloudinary f_auto,q_auto URL for bandwidth reduction
 function cdnUrl(src: string, width: number): string {
@@ -18,29 +18,69 @@ function cdnUrl(src: string, width: number): string {
   );
 }
 
-// ─── Static Image Card (no auto-slide) ────────────────────────────────────────
+// ─── Auto-sliding Image Panel ────────────────────────────────────────────────
 function ServiceImagePanel({
   images,
   title,
   subtitle,
+  compact = false,
 }: {
   images: ServiceImage[];
   title: string;
   subtitle?: string;
+  compact?: boolean;
 }) {
+  const n = images.length;
   const [activeIndex, setActiveIndex] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  function stop() {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }
+
+  function restart() {
+    stop();
+    if (n <= 1) return;
+    intervalRef.current = setInterval(
+      () => setActiveIndex((p) => (p + 1) % n),
+      3500
+    );
+  }
+
+  useEffect(() => {
+    restart();
+    return stop;
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function navigate(delta: number) {
+    setActiveIndex((prev) => ((prev + delta) % n + n) % n);
+    restart();
+  }
 
   return (
-    <div className="relative h-60 overflow-hidden select-none">
-      <img
-        src={cdnUrl(images[activeIndex].src, 600)}
-        alt={images[activeIndex].alt}
-        loading="lazy"
-        decoding="async"
-        className="w-full h-full object-cover"
-        width={600}
-        height={240}
-      />
+    <div
+      className={`relative overflow-hidden select-none ${compact ? "h-44" : "h-60"}`}
+      onMouseEnter={stop}
+      onMouseLeave={restart}
+    >
+      {/* All images stacked; active one fades in */}
+      {images.map((img, i) => (
+        <img
+          key={i}
+          src={cdnUrl(img.src, 600)}
+          alt={img.alt}
+          loading={i === 0 ? "eager" : "lazy"}
+          decoding="async"
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+            i === activeIndex ? "opacity-100" : "opacity-0"
+          }`}
+          width={600}
+          height={240}
+        />
+      ))}
 
       {/* Gradient + title */}
       <div className="absolute bottom-0 left-0 right-0 p-2 z-10 bg-gradient-to-t from-black/80 to-transparent">
@@ -52,22 +92,26 @@ function ServiceImagePanel({
         )}
       </div>
 
-      {/* Dot indicators — manual browse only, no auto-slide */}
-      {images.length > 1 && (
-        <div className="absolute bottom-2 right-3 z-20 flex items-center gap-1">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              aria-label={`Image ${i + 1}`}
-              onClick={() => setActiveIndex(i)}
-              className={`rounded-full transition-all duration-200 ${
-                i === activeIndex
-                  ? "bg-white w-4 h-1.5"
-                  : "bg-white/50 w-1.5 h-1.5 hover:bg-white/80"
-              }`}
-            />
-          ))}
-        </div>
+      {/* Prev / Next — only when >1 image */}
+      {n > 1 && (
+        <>
+          <button
+            type="button"
+            aria-label="Previous image"
+            onClick={() => navigate(-1)}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-8 h-8 rounded-full bg-black/35 backdrop-blur-sm border border-white/20 text-white hover:bg-black/55 hover:scale-105 active:scale-95 transition-all duration-150"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Next image"
+            onClick={() => navigate(1)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-8 h-8 rounded-full bg-black/35 backdrop-blur-sm border border-white/20 text-white hover:bg-black/55 hover:scale-105 active:scale-95 transition-all duration-150"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </>
       )}
     </div>
   );
@@ -76,11 +120,13 @@ function ServiceImagePanel({
 interface ServiceCardProps {
   service: Service;
   showAddonBadge?: boolean;
+  compact?: boolean;
 }
 
 export default function ServiceCard({
   service,
   showAddonBadge,
+  compact = false,
 }: ServiceCardProps) {
   const [showPrices, setShowPrices] = useState(false);
   const [selectedSeatTab, setSelectedSeatTab] = useState<"leather" | "fabric">(
@@ -93,6 +139,7 @@ export default function ServiceCard({
       className={`group relative flex flex-col h-full rounded-2xl overflow-hidden bg-card shadow-lg hover:shadow-xl transition-shadow duration-200 ${
         isPopular ? "border-0" : "border border-border"
       }`}
+      style={{ minHeight: 0 }}
     >
       {/* Add-On badge */}
       {showAddonBadge && (
@@ -110,12 +157,13 @@ export default function ServiceCard({
         }
         title={service.title}
         subtitle={service.subtitle}
+        compact={compact}
       />
 
-      {/* Content body */}
+      {/* Content body — flex column; middle section scrolls, footer stays pinned */}
       <div className="flex flex-col flex-1 min-h-0 p-4 pt-3">
         {/* Duration pill + starting price */}
-        <div className="flex items-center gap-3 mb-3">
+        <div className="flex items-center gap-3 mb-2.5 flex-shrink-0">
           {service.duration && (
             <span
               className={`inline-flex items-center gap-1.5 self-start text-xs font-semibold bg-gradient-to-r ${service.color} text-white rounded-full px-3 py-1 shadow-sm`}
@@ -133,12 +181,12 @@ export default function ServiceCard({
           </span>
         </div>
 
-        <p className="text-sm text-darkgray mb-2 leading-relaxed">
+        <p className="text-sm text-darkgray mb-2 leading-relaxed flex-shrink-0">
           {service.description}
         </p>
 
-        {/* Feature list */}
-        <ul className="space-y-1 mb-3 overflow-y-auto max-h-36 pr-1 scrollbar-custom">
+        {/* Feature list — scrollable, fills remaining vertical space */}
+        <ul className="space-y-1 flex-1 min-h-0 overflow-y-auto pr-1 scrollbar-custom mb-2">
           {service.features.map((feature, index) => (
             <li key={index} className="flex items-start gap-2">
               <Check
@@ -243,20 +291,18 @@ export default function ServiceCard({
   if (isPopular) {
     return (
       <div className="golden-border-wrapper h-full relative">
-        {/* Popular badge */}
-        <div className="absolute top-3 right-3 z-20 flex flex-col items-center gap-0.5">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center shadow-lg shadow-amber-400/40">
+        {/* Popular badge — pill in top-left of image area */}
+        <div className="absolute top-4 left-4 z-20 pointer-events-none">
+          <span className="inline-flex items-center gap-.5 bg-gradient-to-r from-amber-600 to-yellow-300 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md shadow-amber-400/40 tracking-wide">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              fill="white"
-              className="w-5 h-5"
+              fill="currentColor"
+              className="w-3 h-3 flex-shrink-0"
               aria-hidden="true"
             >
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
-          </div>
-          <span className="text-[8px] font-bold text-amber-600 dark:text-amber-400 whitespace-nowrap">
             Most Popular
           </span>
         </div>

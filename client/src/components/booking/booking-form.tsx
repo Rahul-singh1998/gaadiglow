@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import CategoryModal from "./category-modal";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { SERVICES, VEHICLE_TIERS, VEHICLE_LABELS } from "@/constants/services";
 import { VEHICLE_IMAGES } from "@/constants/serviceImages";
 import { BOOKING_SERVICE_IMAGES, ServiceImageKey } from "@/constants/serviceImages";
 import { motion } from "framer-motion";
-import { MapPin, Loader2, Phone, User, Calendar, Clock, Car, Sparkles, ExternalLink, AlertCircle } from "lucide-react";
+import { MapPin, Loader2, User, Calendar, Sparkles, ExternalLink, AlertCircle } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,6 +30,31 @@ const TIME_SLOTS = [
   "08:00 PM - 09:00 PM",
 ];
 
+/**
+ * Returns true when a slot should be disabled.
+ * Logic: only applies when bookingDate === today.
+ * We parse the slot's START hour so the slot is disabled as soon as it begins.
+ */
+function isPastSlot(slot: string, bookingDate: string): boolean {
+  if (!bookingDate) return false;
+  const now = new Date();
+  const todayStr = now.toISOString().slice(0, 10); // "YYYY-MM-DD"
+  if (bookingDate !== todayStr) return false;
+
+  // Parse start time, e.g. "06:00 AM" from "06:00 AM - 08:00 AM"
+  const startPart = slot.split(" - ")[0].trim(); // "06:00 AM"
+  const [timePart, meridiem] = startPart.split(" ");
+  const [hStr, mStr] = timePart.split(":");
+  let hours = parseInt(hStr, 10);
+  const minutes = parseInt(mStr, 10);
+  if (meridiem === "PM" && hours !== 12) hours += 12;
+  if (meridiem === "AM" && hours === 12) hours = 0;
+
+  const slotStart = new Date(now);
+  slotStart.setHours(hours, minutes, 0, 0);
+  return now >= slotStart;
+}
+
 
 
 /* Stagger animation helpers */
@@ -43,7 +68,10 @@ const fadeUp = {
 };
 
 const inputBase =
-  "h-12 w-full rounded-xl bg-white/80 dark:bg-background/60 border border-border/50 px-4 text-sm shadow-sm transition-all duration-200 placeholder:text-muted-foreground/50 hover:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary focus:bg-white dark:focus:bg-background focus:scale-[1.01]";
+  "h-10 w-full rounded-lg bg-background border border-border/60 px-3.5 text-sm transition-all duration-150 placeholder:text-muted-foreground/40 hover:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary";
+
+const sectionLabel =
+  "flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3";
 
 const ErrorMsg = ({ msg }: { msg?: string }) =>
   msg ? (
@@ -69,10 +97,23 @@ export default function BookingForm({
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const { toast } = useToast();
 
-  const formatDate = (d: Date) => d.toISOString().split("T")[0];
+  // Use local date parts to avoid UTC offset shifting the day backward (e.g. IST = UTC+5:30)
+  const formatDate = (d: Date) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const minDate = formatDate(today);
+
+  // Auto-select today's date on first render if none is set
+  useEffect(() => {
+    if (!bookingData.date) {
+      updateBookingData({ date: minDate });
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const maxDateObj = new Date(today);
   maxDateObj.setDate(today.getDate() + 30);
   const maxDate = formatDate(maxDateObj);
@@ -149,7 +190,7 @@ export default function BookingForm({
 
   return (
     <motion.form
-      className="space-y-7"
+      className="space-y-0"
       initial="hidden"
       animate="visible"
       onSubmit={(e) => {
@@ -166,11 +207,7 @@ export default function BookingForm({
           newErrors.seatType = "Please select Leather or Fabric seat type.";
         // Address validation
         if (!locationUrl && !manualAddress.trim()) {
-          newErrors.manualAddress = "Please provide address or share location.";
-        }
-        if (manualAddress) {
-          if (manualAddress.length < 4) newErrors.manualAddress = "Address too short.";
-          else if (!/\d+/.test(manualAddress)) newErrors.manualAddress = "Include your door or flat number.";
+          // address is optional — no error
         }
         if (!bookingData.date) {
           newErrors.date = "Please select a booking date.";
@@ -221,113 +258,98 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
         window.open(`https://wa.me/917800800122?text=${msg}`, "_blank");
       }}
     >
-      {/* ─── Name & Phone ─── */}
-      <motion.div variants={fadeUp} custom={0} className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div>
-          <Label htmlFor="vehicle-model" className="flex items-center gap-2 text-sm font-semibold mb-2.5">
-            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-              <User className="h-3.5 w-3.5 text-primary" />
-            </div>
-            Your Name
-          </Label>
-          <Input
-            id="vehicle-model"
-            placeholder="e.g. Rahul Sharma"
-            autoFocus
-            className={inputBase}
-            value={bookingData.vehicleModel}
-            onChange={(e) => updateBookingData({ vehicleModel: e.target.value })}
-          />
-        </div>
-        <div>
-          <Label htmlFor="phone" className="flex items-center gap-2 text-sm font-semibold mb-2.5">
-            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Phone className="h-3.5 w-3.5 text-primary" />
-            </div>
-            Phone Number <span className="text-destructive">*</span>
-          </Label>
-          <Input
-            id="phone"
-            type="tel"
-            inputMode="numeric"
-            maxLength={10}
-            placeholder="10-digit mobile number"
-            className={`${inputBase} ${errors.phone ? "!border-destructive ring-1 ring-destructive/30" : ""}`}
-            value={bookingData.phone}
-            onChange={(e) => {
-              updateBookingData({ phone: e.target.value.replace(/\D/g, "").slice(0, 10) });
-              clearError("phone");
-            }}
-          />
-          <ErrorMsg msg={errors.phone} />
+      {/* ══ SECTION: Personal Info ══ */}
+      <motion.div variants={fadeUp} custom={0} className="pt-2 pb-6 border-b border-border/30">
+        <p className={sectionLabel}><User className="h-3 w-3 text-primary" /> Personal Info</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <Label htmlFor="vehicle-model" className="text-sm font-medium text-foreground/80">Your Name</Label>
+            <Input
+              id="vehicle-model"
+              placeholder="e.g. Rahul Sharma"
+              autoFocus
+              className={inputBase}
+              value={bookingData.vehicleModel}
+              onChange={(e) => updateBookingData({ vehicleModel: e.target.value })}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="phone" className="text-sm font-medium text-foreground/80">Phone Number <span className="text-destructive">*</span></Label>
+            <Input
+              id="phone"
+              type="tel"
+              inputMode="numeric"
+              maxLength={10}
+              placeholder="10-digit mobile number"
+              className={`${inputBase} ${errors.phone ? "!border-destructive ring-1 ring-destructive/30" : ""}`}
+              value={bookingData.phone}
+              onChange={(e) => {
+                updateBookingData({ phone: e.target.value.replace(/\D/g, "").slice(0, 10) });
+                clearError("phone");
+              }}
+            />
+            <ErrorMsg msg={errors.phone} />
+          </div>
         </div>
       </motion.div>
 
-      {/* ─── Address Section Refactored ─── */}
-      <motion.div variants={fadeUp} custom={1} className="space-y-6">
-        {/* A) Current Location (Auto-filled) */}
-        <div>
-          <Label className="font-semibold text-sm mb-2 flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-primary" />
-            Current Location (via GPS)
-          </Label>
-          <div className="flex gap-2">
+      {/* ══ SECTION: Location ══ */}
+      <motion.div variants={fadeUp} custom={1} className="py-6 border-b border-border/30 space-y-4">
+        <p className={sectionLabel}><MapPin className="h-3 w-3 text-primary" /> Location</p>
+
+        {/* GPS */}
+        <div className="space-y-1.5">
+          <Label className="text-sm font-medium text-foreground/80">Current Location <span className="text-muted-foreground font-normal text-xs">(via GPS)</span></Label>
+          <div className="flex flex-col gap-2">
             <Input
               readOnly
               value={locationUrl}
-              placeholder="Share your current location"
-              className="flex-1"
+              placeholder={locationUrl ? locationUrl : "Tap \"Share Location\" to skip the hassle."}
+              className={`${inputBase} ${locationUrl ? "text-primary font-medium" : ""}`}
             />
             <Button
               type="button"
               onClick={handleShareLocation}
               disabled={locating}
-              className="shrink-0"
+              variant="outline"
+              className="w-full h-9 rounded-lg border-primary/40 text-primary hover:bg-primary/5 font-medium text-sm gap-2"
             >
-              {locating ? <Loader2 className="animate-spin h-4 w-4" /> : <MapPin className="h-4 w-4" />}
-              Share Location
+              {locating ? <Loader2 className="animate-spin h-3.5 w-3.5" /> : <MapPin className="h-3.5 w-3.5" />}
+              {locating ? "Fetching location…" : "Share Location"}
             </Button>
           </div>
-          <div className="text-xs text-muted-foreground mt-1">Faster service with precise GPS location</div>
-          {errors.locationUrl && <ErrorMsg msg={errors.locationUrl} />}
           {locationUrl && (
-            <a
-              href={locationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs text-primary hover:underline mt-1"
-            >
-              <ExternalLink className="h-3 w-3" />
-              View on Maps
+            <a href={locationUrl} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+              <ExternalLink className="h-3 w-3" /> View on Maps
             </a>
           )}
+          {errors.locationUrl && <ErrorMsg msg={errors.locationUrl} />}
         </div>
 
-        {/* B) Manual Address (User Input) */}
-        <div>
-          <Label className="font-semibold text-sm mb-2 flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-primary" />
-            Door / Flat No &amp; Building Name <span className="text-destructive">*</span>
+        {/* Manual address */}
+        <div className="space-y-1.5">
+          <Label className="text-sm font-medium text-foreground/80">
+            Door / Flat No &amp; Building Name
+            {/* <span className="ml-1.5 text-xs font-normal text-muted-foreground">(Optional)</span> */}
           </Label>
           <Input
             value={manualAddress}
             onChange={e => { setManualAddress(e.target.value); clearError("manualAddress"); }}
-            placeholder="Enter door or building number for precise arrival"
-            className={errors.manualAddress ? "!border-destructive ring-1 ring-destructive/30" : ""}
+            placeholder="e.g. Flat 4B, Sunrise Apartments"
+            className={`${inputBase} ${errors.manualAddress ? "!border-destructive ring-1 ring-destructive/30" : ""}`}
           />
           {errors.manualAddress && <ErrorMsg msg={errors.manualAddress} />}
         </div>
       </motion.div>
 
-      {/* ─── Date ─── */}
-      <motion.div variants={fadeUp} custom={2}>
-        <div>
-          <Label htmlFor="date" className="flex items-center gap-2 text-sm font-semibold mb-2.5">
-            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Calendar className="h-3.5 w-3.5 text-primary" />
-            </div>
-            Booking Date
-          </Label>
+      {/* ══ SECTION: Booking Schedule ══ */}
+      <motion.div variants={fadeUp} custom={2} className="py-6 border-b border-border/30 space-y-5">
+        <p className={sectionLabel}><Calendar className="h-3 w-3 text-primary" /> Schedule</p>
+
+        {/* Date */}
+        <div className="space-y-1.5">
+          <Label htmlFor="date" className="text-sm font-medium text-foreground/80">Booking Date <span className="text-destructive">*</span></Label>
           <Input
             id="date"
             type="date"
@@ -352,66 +374,66 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
             }}
           />
           <ErrorMsg msg={errors.date} />
-          <p className="text-xs text-muted-foreground mt-1.5 ml-1">You can book up to 30 days in advance</p>
+          <p className="text-xs text-muted-foreground">Book up to 30 days in advance</p>
+        </div>
+
+        {/* Time Slots */}
+        <div className="space-y-2">
+          <Label className="text-sm font-medium text-foreground/80">Available Time Slot <span className="text-destructive">*</span></Label>
+          <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Select a time slot">
+            {TIME_SLOTS.map((slot) => {
+              const isSelected = bookingData.time === slot;
+              const isDisabled = isPastSlot(slot, bookingData.date);
+              return (
+                <motion.label
+                  key={slot}
+                  whileHover={isDisabled ? {} : { scale: 1.02 }}
+                  whileTap={isDisabled ? {} : { scale: 0.98 }}
+                  className={`relative flex items-center justify-center rounded-lg px-2 py-2.5 text-center text-xs font-medium transition-all duration-150 border select-none ${
+                    isDisabled
+                      ? "cursor-not-allowed opacity-35 border-border/20 bg-muted/10 text-muted-foreground"
+                      : isSelected
+                      ? "cursor-pointer border-primary bg-primary/10 text-primary shadow-sm ring-1 ring-primary/25"
+                      : errors.time
+                      ? "cursor-pointer border-destructive/40 bg-muted/20 text-muted-foreground hover:border-primary/40 hover:bg-primary/5"
+                      : "cursor-pointer border-border/50 bg-muted/20 text-muted-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-foreground"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="time-slot"
+                    value={slot}
+                    checked={isSelected}
+                    disabled={isDisabled}
+                    onChange={() => {
+                      if (isDisabled) return;
+                      updateBookingData({ time: slot });
+                      clearError("time");
+                    }}
+                    className="sr-only"
+                    aria-label={slot}
+                  />
+                  {isSelected && !isDisabled && (
+                    <div className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
+                      <svg className="w-2 h-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  )}
+                  <span className="leading-tight">{slot}</span>
+                </motion.label>
+              );
+            })}
+          </div>
+          <ErrorMsg msg={errors.time} />
         </div>
       </motion.div>
 
-      {/* ─── Time Slot Pills ─── */}
-      <motion.div variants={fadeUp} custom={2.5}>
-        <Label className="flex items-center gap-2 text-sm font-semibold mb-3">
-          <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Clock className="h-3.5 w-3.5 text-primary" />
-          </div>
-          Available Time Slot <span className="text-destructive">*</span>
-        </Label>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5" role="radiogroup" aria-label="Select a time slot">
-          {TIME_SLOTS.map((slot) => {
-            const isSelected = bookingData.time === slot;
-            return (
-              <motion.label
-                key={slot}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className={`relative flex items-center justify-center cursor-pointer rounded-xl px-3 py-3 text-center text-sm font-medium transition-all duration-200 border-2 select-none ${
-                  isSelected
-                    ? "border-primary bg-primary/10 text-primary shadow-md shadow-primary/15 ring-2 ring-primary/25"
-                    : errors.time
-                    ? "border-destructive/40 bg-muted/20 text-muted-foreground hover:border-primary/40 hover:bg-primary/5"
-                    : "border-border/30 bg-muted/20 text-muted-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-foreground"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="time-slot"
-                  value={slot}
-                  checked={isSelected}
-                  onChange={() => { updateBookingData({ time: slot }); clearError("time"); }}
-                  className="sr-only"
-                  aria-label={slot}
-                />
-                {isSelected && (
-                  <div className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
-                    <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                )}
-                <span className="leading-tight">{slot}</span>
-              </motion.label>
-            );
-          })}
-        </div>
-        <ErrorMsg msg={errors.time} />
-      </motion.div>
-
-      {/* ─── Choose Package ─── */}
-      <motion.div variants={fadeUp} custom={3}>
-        <Label className="flex items-center gap-2 text-sm font-semibold mb-3">
-          <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
-          </div>
-          Choose Package <span className="text-destructive">*</span>
-        </Label>
+      {/* ══ SECTION: Service & Vehicle ══ */}
+      <motion.div variants={fadeUp} custom={3} className="py-6 border-b border-border/30 space-y-5">
+        <p className={sectionLabel}><Sparkles className="h-3 w-3 text-primary" /> Service &amp; Vehicle</p>
+        <div>
+          <Label className="text-sm font-medium text-foreground/80 mb-2 block">Choose Package <span className="text-destructive">*</span></Label>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {SERVICES.map((service) => {
             const isSelected = bookingData.service === service.title;
@@ -484,18 +506,13 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
             );
           })}
         </div>
-        <ErrorMsg msg={errors.service} />
-      </motion.div>
+          <ErrorMsg msg={errors.service} />
+        </div>
 
-      {/* ─── Seat Type (Fabric / Leather Care only) ─── */}
-      {bookingData.service === "Fabric / Leather Care" && (
-        <motion.div variants={fadeUp} custom={3.5} initial="hidden" animate="visible">
-          <Label className="flex items-center gap-2 text-sm font-semibold mb-3">
-            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
-            </div>
-            Seat Type <span className="text-destructive">*</span>
-          </Label>
+        {/* Seat Type (conditional) */}
+        {bookingData.service === "Fabric / Leather Care" && (
+          <motion.div variants={fadeUp} custom={3.5} initial="hidden" animate="visible">
+            <Label className="text-sm font-medium text-foreground/80 mb-2 block">Seat Type <span className="text-destructive">*</span></Label>
           <div className="grid grid-cols-2 gap-3">
             {(['leather', 'fabric'] as const).map((type) => {
               const isSelected = seatType === type;
@@ -542,25 +559,22 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
               );
             })}
           </div>
-          <ErrorMsg msg={errors.seatType} />
-        </motion.div>
-      )}
+            <ErrorMsg msg={errors.seatType} />
+          </motion.div>
+        )}
 
-      {/* ─── Select Car Type ─── */}
-      <motion.div variants={fadeUp} custom={4}>
-        <Label className="flex items-center gap-2 text-sm font-semibold mb-1">
-          <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Car className="h-3.5 w-3.5 text-primary" />
+        {/* Car Type */}
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <Label className="text-sm font-medium text-foreground/80">Car Type <span className="text-destructive">*</span></Label>
+            <button
+              type="button"
+              className="text-xs text-primary/80 underline underline-offset-2 hover:text-primary font-medium cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              onClick={() => setShowCategoryModal(true)}
+            >
+              Not sure? Find out →
+            </button>
           </div>
-          Select Car Type <span className="text-destructive">*</span>
-        </Label>
-        <button
-          type="button"
-          className="block text-xs text-primary/80 underline underline-offset-2 hover:text-primary font-medium mb-3 ml-10 cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-          onClick={() => setShowCategoryModal(true)}
-        >
-          Confused about your car category? Find out →
-        </button>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {VEHICLE_TIERS.map((tier) => {
             const isSelected = bookingData.vehicleType === tier;
@@ -602,25 +616,23 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
             );
           })}
         </div>
-        <ErrorMsg msg={errors.vehicleType} />
+          <ErrorMsg msg={errors.vehicleType} />
+        </div>
       </motion.div>
-
-
 
       <CategoryModal open={showCategoryModal} onClose={() => setShowCategoryModal(false)} />
 
-      {/* ─── Price Display ─── */}
-      <motion.div variants={fadeUp} custom={5} className="p-5 rounded-2xl bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/15 space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="font-semibold text-sm">Estimated Price</span>
-          <span className="text-3xl font-bold text-primary">₹{bookingData.price}</span>
+      {/* ══ SECTION: Summary ══ */}
+      <motion.div variants={fadeUp} custom={5} className="pt-6 space-y-4">
+      <div className="p-4 rounded-xl bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/15">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-muted-foreground">Estimated Price</span>
+            <span className="text-3xl font-bold text-primary">₹{bookingData.price}</span>
+          </div>
         </div>
-        
-      </motion.div>
 
-      {/* ─── Terms & Conditions ─── */}
-      <motion.div variants={fadeUp} custom={6}>
-        <div className="flex items-start gap-3 p-4 rounded-xl border border-border/40 bg-muted/20 hover:bg-muted/30 transition-colors">
+        {/* Terms */}
+        <div className="flex items-start gap-3 p-4 rounded-xl border border-border/40 bg-muted/20">
           <Checkbox
             id="terms"
             checked={bookingData.acceptedTerms}
@@ -634,11 +646,10 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
             <Link href="/terms" className="text-primary underline underline-offset-2 hover:text-primary/80 font-medium">
               Terms and Conditions
             </Link>{" "}
-            as set out by the user agreement.{" "}
-            <span className="text-destructive">*</span>
-            <p className="text-xs text-muted-foreground leading-snug">
-          Luxury vehicles may be charged an additional ₹100 for enhanced care and precision cleaning.
-        </p>
+            as set out by the user agreement. <span className="text-destructive">*</span>
+            <p className="text-xs text-muted-foreground leading-snug mt-0.5">
+              Luxury vehicles may be charged an additional ₹100 for enhanced care.
+            </p>
           </Label>
         </div>
         <ErrorMsg msg={errors.acceptedTerms} />

@@ -81,11 +81,13 @@ export default function ServicesSection() {
           </p>
         </motion.div>
 
-        {/* Main service cards */}
+        {/* Main service cards — fixed card height; long feature lists scroll inside the card.
+             → To make cards taller/shorter, change the h-[...] value on the motion.div below. */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
           {mainServices.map((service, i) => (
             <motion.div
               key={service.id}
+              className="h-[560px]"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: i * 0.1 }}
@@ -98,8 +100,8 @@ export default function ServicesSection() {
 
         {/* Add-On section */}
         {addonService && (
-          <div className="mt-16 max-w-md mx-auto">
-            <ServiceCard service={addonService} showAddonBadge />
+          <div className="mt-8 max-w-[300px] mx-auto">
+            <ServiceCard service={addonService} showAddonBadge compact />
           </div>
         )}
 

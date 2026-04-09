@@ -4,10 +4,11 @@ import HeroCarousel from "./hero-carousel";
 
 const services = [
   "Foam Wash",
-  "Pressure Washing",
-  "Vacuum Cleaning",
-  "Underbody Cleaning",
-  "Pet Hair Removal",
+  "Pressure Wash",
+  "Vacuum",
+  "Leather/Fabric Care",
+  "Dry Cleaning",
+  "3M Wax Polish",
 ];
 
 export default function HeroSection() {
@@ -48,8 +49,8 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-white">
-            Your Car, Our Care <br />
-            <span className="text-primary">At Your Doorstep</span>
+          Doorstep Car Wash <br />
+            <span className="text-primary">Service in Delhi</span>
           </h1>
 
           <p className="text-2xl md:text-3xl font-semibold text-primary mb-4">
@@ -73,8 +74,7 @@ export default function HeroSection() {
 
           {/* Book via WhatsApp */}
           <a
-            href="https://wa.me/917800800122?text=Hi!%20I%20want%20to%20book%20a%20car%20wash%20with%20GaadiGlow."
-            target="_blank"
+            href="/booking"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-green-500 via-green-400 to-emerald-500 px-7 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:from-green-600 hover:to-emerald-600 hover:shadow-green-400/40 hover:scale-105 w-full sm:w-auto"
           >

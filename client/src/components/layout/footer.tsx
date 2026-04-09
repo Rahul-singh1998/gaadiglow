@@ -81,7 +81,7 @@ export default function Footer() {
               <div>
                 <p className="font-medium">Working Hours</p>
                 <p className="opacity-80">Monday to Sunday</p>
-                <p className="opacity-80">6:00 am to 6:00 pm</p>
+                <p className="opacity-80">8:00 am to 8:00 pm</p>
               </div>
             </div>
           </div>

@@ -98,6 +98,7 @@ export const SERVICES: Service[] = [
     image: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/basic-car-wash-service-delhi-3",
     images: [
       { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/basic-car-wash-service-delhi-3", alt: "Professional doorstep car foam wash exterior cleaning service" },
+      { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/man-wash-car-using-shampoo_hb3niq", alt: "Car body polishing for enhanced shine and gloss finish doorstep service" },
       { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/car-wash-detailing-station_fvpkw3", alt: "High pressure car wash removing dirt and dust at doorstep Delhi" },
       { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/mirror-cleaning_qetktd", alt: "Alloy wheel and tyre cleaning with brush car wash service" },
     ],
@@ -116,20 +117,22 @@ export const SERVICES: Service[] = [
       "Tyre Polish & Dressing for Rich Black look",
     ],
     price: [
-      { mrp: 750, final: 599 },   // Hatchback
-      { mrp: 875, final: 699 },   // Sedan / Compact SUV
-      { mrp: 1000, final: 799 },  // Standard SUV
-      { mrp: 1125, final: 899 },  // Full-size SUV
+      { mrp: 999, final: 799 },   // Hatchback
+      { mrp: 1124, final: 899 },   // Sedan / Compact SUV
+      { mrp: 1249, final: 999 },  // Standard SUV
+      { mrp: 1499, final: 1199 },  // Full-size SUV
     ],
     
-    duration: "30–45 min",
-    image: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/man-wash-car-using-shampoo_hb3niq",
+    duration: "1–1.5 hrs",
+    image: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/seat-cleaning-service-car-delhi-2",
     images: [
-      { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/man-wash-car-using-shampoo_hb3niq", alt: "Car body polishing for enhanced shine and gloss finish doorstep service" },
+      
+      { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/seat-cleaning-service-car-delhi-2", alt: "Complete car interior cleaning and detailing service Delhi NCR" },
       { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/man-s-hand-is-cleaning-waxing-car_1150-6629_ltz1bo", alt: "Safe engine bay cleaning with protective covering car detailing Delhi" },
       { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/close-up-person-cleaning-car-interior_ir8c60", alt: "Car glass polishing for clear visibility standard wash service" },
     ],
     color: "from-purple-500 to-purple-200",
+    popular: true,
   },
   {
     id: 3,
@@ -171,12 +174,10 @@ export const SERVICES: Service[] = [
     image: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/Leather_Seat_Cleaning_c266ld",
     images: [
       { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/Leather_Seat_Cleaning_c266ld", alt: "Deep dry cleaning of fabric and leather car seats at doorstep Delhi" },
-      { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/seat-cleaning-service-car-delhi-2", alt: "Complete car interior cleaning and detailing service Delhi NCR" },
       { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/Keeping_Car_Seats_in_Top_Condition_halbdz", alt: "Dashboard and center console cleaning polishing service Delhi" },
       { src: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/Remove_Stains_and_Odors_hc1pf7", alt: "Dashboard and center console cleaning polishing service Delhi" },
     ],
     color: "from-amber-500 to-amber-200",
-    popular: true,
   },
   // 3M Wax Polish as Add-On Service
   {
@@ -193,7 +194,7 @@ export const SERVICES: Service[] = [
       { mrp: 199, final: 149 }, // Hatchback
       { mrp: 249, final: 199 }, // Sedan / Compact SUV
       { mrp: 249, final: 199 }, // Standard SUV
-      { mrp: 249, final: 199 }, // Full-size SUV
+      { mrp: 375, final: 299 }, // Full-size SUV
     ],
     duration: "15–30 min",
     image: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/car-wax-polish-service-delhi-1",

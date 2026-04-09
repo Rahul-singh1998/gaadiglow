@@ -7,6 +7,7 @@ import { lazy, Suspense } from "react";
 import HomePage from "@/pages/home-page";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import BackToTop from "@/components/layout/back-to-top";
 
 const NotFound = lazy(() => import("@/pages/not-found"));
 const TermsPage = lazy(() => import("@/pages/terms-page"));
@@ -39,6 +40,7 @@ function App() {
           <Footer />
         </div>
         <Toaster />
+        <BackToTop />
       </TooltipProvider>
     </QueryClientProvider>
   );

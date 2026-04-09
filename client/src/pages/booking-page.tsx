@@ -60,7 +60,7 @@ export default function BookingPage() {
             {/* Header */}
             <header className="text-center mb-10">
               <span className="inline-block bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-5 uppercase tracking-widest">
-                Book in 60 Seconds
+                Book in 30 Seconds
               </span>
               <h1 className="font-bold text-3xl md:text-5xl mb-4 leading-tight text-foreground">
                 Booking Form

@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 const testimonials = [
   {
@@ -117,6 +118,15 @@ const TestimonialCard = ({ t }: { t: (typeof testimonials)[number] }) => (
 const marqueeItems = testimonials.concat(testimonials);
 
 export default function TestimonialsSection() {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  function pause() {
+    if (trackRef.current) trackRef.current.style.animationPlayState = "paused";
+  }
+  function resume() {
+    if (trackRef.current) trackRef.current.style.animationPlayState = "running";
+  }
+
   return (
     <section
       id="testimonials"
@@ -143,12 +153,19 @@ export default function TestimonialsSection() {
       </div>
 
       {/* Marquee */}
-      <div className="testimonial-marquee relative">
+      <div
+        className="testimonial-marquee relative"
+        onMouseEnter={pause}
+        onMouseLeave={resume}
+        onTouchStart={pause}
+        onTouchEnd={resume}
+        onTouchCancel={resume}
+      >
         {/* Gradient fade edges */}
         <div className="pointer-events-none absolute left-0 top-0 h-full w-12 sm:w-20 bg-gradient-to-r from-background to-transparent z-10" />
         <div className="pointer-events-none absolute right-0 top-0 h-full w-12 sm:w-20 bg-gradient-to-l from-background to-transparent z-10" />
 
-        <div className="marquee-track">
+        <div className="marquee-track" ref={trackRef}>
           {marqueeItems.map((t, index) => (
             <TestimonialCard key={`${t.id}-${index}`} t={t} />
           ))}

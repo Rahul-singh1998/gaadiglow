@@ -193,67 +193,75 @@
   border-radius: 9999px;
 }
 
-/* Golden animated border for "Most Popular" card */
+/* ── "Most Popular" card — shimmer sweep border ────────────────────────────
+   How it works:
+   · ::before  → static amber/gold gradient that forms the visible 2-px border
+   · ::after   → a bright highlight that sweeps across the border left→right
+                 once every 3.5 s (pauseTime included so it doesn't loop
+                 non-stop and become distracting)
+   · box-shadow → warm amber glow for elevation; no blur pseudo-element needed
+──────────────────────────────────────────────────────────────────────────── */
 .golden-border-wrapper {
   position: relative;
-  border-radius: 1rem;
-  padding: 2px;
+  border-radius: 1.1rem;
+  padding: 3.5px;
   isolation: isolate;
+  transform: scale(1.025);
+  transform-origin: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow:
+    0 0 0 0 transparent,
+    0 8px 28px -4px rgba(245, 241, 11, 0.3),
+    0 2px 8px -2px rgba(0, 0, 0, 0.10);
 }
 
+/* Static gradient border layer */
 .golden-border-wrapper::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: conic-gradient(
-    from var(--border-angle, 0deg),
-    #fbbf24,
-    #f59e0b,
-    #d97706,
-    #fbbf24,
-    #fde68a,
-    #fbbf24
+  background: linear-gradient(
+    135deg,
+    #fcd34d 0%,
+    #f59e0b 30%,
+    #d97706 55%,
+    #f59e0b 75%,
+    #fde68a 100%
   );
-  animation: rotateBorder 4s linear infinite;
-  z-index: -2;
+  z-index: -1;
 }
 
+/* Shimmer sweep — a bright band gliding left-to-right across the border */
 .golden-border-wrapper::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: conic-gradient(
-    from var(--border-angle, 0deg),
-    #fbbf24,
-    #f59e0b,
-    #d97706,
-    #fbbf24,
-    #fde68a,
-    #fbbf24
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.72) 48%,
+    transparent 76%
   );
-  animation: rotateBorder 4s linear infinite;
-  filter: blur(10px);
-  opacity: 0.4;
-  z-index: -3;
-  transition: opacity 0.3s ease;
+  background-size: 220% 100%;
+  animation: popular-shimmer 3.5s ease-in-out infinite;
+  z-index: -1;
+  pointer-events: none;
 }
 
-.golden-border-wrapper:hover::after {
-  opacity: 0.65;
+@keyframes popular-shimmer {
+  0%   { background-position: -120% center; }
+  45%  { background-position: 220% center; }
+  100% { background-position: 220% center; } /* pause for remainder of cycle */
 }
 
-@property --border-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes rotateBorder {
-  to {
-    --border-angle: 360deg;
-  }
+.golden-border-wrapper:hover {
+  transform: scale(1.03);
+  box-shadow:
+    0 0 0 0 transparent,
+    0 12px 36px -4px rgba(245, 158, 11, 0.40),
+    0 4px 12px -2px rgba(0, 0, 0, 0.12);
 }
 
 /* Testimonial marquee */
@@ -274,10 +282,6 @@
   .marquee-track {
     animation-duration: 25s;
   }
-}
-
-.testimonial-marquee:hover .marquee-track {
-  animation-play-state: paused;
 }
 
 @keyframes scroll-marquee {
