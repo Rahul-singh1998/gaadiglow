@@ -14,7 +14,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mb-5 opacity-80 text-sm leading-relaxed">
-              Premium doorstep car cleaning in Delhi NCR — foam wash, fabric &amp; leather seat care &amp; 3M wax polish delivered with professional care.
+            Premium doorstep car cleaning in New Delhi — foam wash, interior care, and 3M wax polish, delivered at your doorstep with expert precision.
             </p>
 
             {/* Social icons */}
