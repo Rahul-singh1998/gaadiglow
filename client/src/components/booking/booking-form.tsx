@@ -68,7 +68,10 @@ const fadeUp = {
 };
 
 const inputBase =
-  "h-10 w-full rounded-lg bg-background border border-border/60 px-3.5 text-sm transition-all duration-150 placeholder:text-muted-foreground/40 hover:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary";
+  "h-10 w-full max-w-full box-border rounded-lg bg-background border border-border/60 px-3.5 text-sm transition-all duration-150 placeholder:text-muted-foreground/40 hover:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary";
+
+const dateInputBase =
+  "h-10 w-full max-w-full box-border block rounded-lg bg-background border border-border/60 px-3.5 text-sm transition-all duration-150 hover:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary [appearance:textfield] [&::-webkit-date-and-time-value]:text-left";
 
 const sectionLabel =
   "flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3";
@@ -355,7 +358,7 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
             type="date"
             min={minDate}
             max={maxDate}
-            className={`${inputBase} ${errors.date ? "!border-destructive ring-1 ring-destructive/30" : ""}`}
+            className={`${dateInputBase} ${errors.date ? "!border-destructive ring-1 ring-destructive/30" : ""}`}
             value={bookingData.date || minDate}
             onChange={(e) => {
               const val = e.target.value;
@@ -389,14 +392,14 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
                   key={slot}
                   whileHover={isDisabled ? {} : { scale: 1.02 }}
                   whileTap={isDisabled ? {} : { scale: 0.98 }}
-                  className={`relative flex items-center justify-center rounded-lg px-2 py-2.5 text-center text-xs font-medium transition-all duration-150 border select-none ${
+                  className={`relative flex items-center justify-center rounded-lg px-2 py-3 text-center text-xs font-medium transition-all duration-150 border select-none ${
                     isDisabled
-                      ? "cursor-not-allowed opacity-35 border-border/20 bg-muted/10 text-muted-foreground"
+                      ? "cursor-not-allowed opacity-30 border-border/20 bg-muted/20 text-muted-foreground/50 line-through"
                       : isSelected
-                      ? "cursor-pointer border-primary bg-primary/10 text-primary shadow-sm ring-1 ring-primary/25"
+                      ? "cursor-pointer border-primary bg-primary text-primary-foreground shadow-sm ring-2 ring-primary/30"
                       : errors.time
-                      ? "cursor-pointer border-destructive/40 bg-muted/20 text-muted-foreground hover:border-primary/40 hover:bg-primary/5"
-                      : "cursor-pointer border-border/50 bg-muted/20 text-muted-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-foreground"
+                      ? "cursor-pointer border-destructive/50 bg-background text-foreground font-semibold shadow-sm hover:border-primary hover:bg-primary/5"
+                      : "cursor-pointer border-border bg-background text-foreground font-semibold shadow-sm hover:border-primary hover:bg-primary/5 hover:text-primary"
                   }`}
                 >
                   <input

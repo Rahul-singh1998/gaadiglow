@@ -22,9 +22,10 @@ const highlights = [
 ];
 
 const areas = [
-  "Connaught Place", "Karol Bagh", "Dwarka", "Rohini",
-  "Vasant Kunj", "Saket", "Lajpat Nagar", "Janakpuri",
-  "Pitampura", "Rajouri Garden", "Mayur Vihar", "Preet Vihar",
+  "Greater Kailash (GK1 & GK2)", "Saket", "Vasant Kunj", "Vasant Vihar",
+  "Defence Colony", "Hauz Khas", "Lajpat Nagar", "Malviya Nagar",
+  "Panchsheel Park", "South Extension", "Kalkaji", "New Friends Colony (NFC)",
+  "Alaknanda", "CR Park"
 ];
 
 export default function ServiceAreaSection() {
