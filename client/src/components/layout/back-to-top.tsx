@@ -1,25 +1,18 @@
-import { useEffect, useState } from "react";
-import { ArrowUp } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
-export default function BackToTop() {
-  const [visible, setVisible] = useState(false);
+const WA_LINK =
+  "https://wa.me/917800800122?text=Hi!%20I'd%20like%20to%20book%20a%20car%20wash%20with%20GaadiGlow.";
 
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 100);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
+export default function WhatsAppFAB() {
   return (
-    <button
-      type="button"
-      aria-label="Back to top"
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-6 right-5 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:scale-110 hover:shadow-primary/40 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${
-        visible ? "opacity-70 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"
-      }`}
+    <a
+      href={WA_LINK}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat with GaadiGlow on WhatsApp"
+      className="fixed bottom-6 right-5 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-[#25D366] text-white shadow-lg shadow-black/20 transition-transform duration-200 hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]/60"
     >
-      <ArrowUp className="h-4 w-4" strokeWidth={3.5} />
-    </button>
+      <FaWhatsapp className="w-6 h-6" />
+    </a>
   );
 }

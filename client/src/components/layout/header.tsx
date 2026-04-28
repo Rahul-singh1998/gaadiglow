@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import MobileMenu from "./mobile-menu";
 import { useTheme } from "@/components/ui/theme-provider";
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun, Smartphone } from "lucide-react";
 import { scrollToSection } from "@/lib/utils";
 
 export default function Header() {
@@ -113,7 +113,7 @@ export default function Header() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white py-1.5 px-4 rounded-lg shadow-lg hover:opacity-90 transition-opacity text-sm font-medium"
             >
-              <i className="fab fa-google-play" />
+              <Smartphone className="h-3.5 w-3.5" />
               Download App
             </a>
           </nav>

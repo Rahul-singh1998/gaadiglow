@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -109,6 +109,7 @@ export default function TermsPage() {
           name="description"
           content="Read GaadiGlow's terms and conditions for doorstep car wash policy, payment terms, cancellation, service quality guarantee, and customer responsibilities."
         />
+        <link rel="canonical" href="https://gaadiglow.com/terms" />
       </Helmet>
 
       <div className="min-h-screen bg-background">

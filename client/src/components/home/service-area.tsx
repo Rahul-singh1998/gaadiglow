@@ -88,7 +88,7 @@ export default function ServiceAreaSection() {
               <div className="absolute bottom-3 left-3 pointer-events-none">
                 <span className="inline-flex items-center gap-1.5 bg-background/90 backdrop-blur-sm text-foreground text-xs font-semibold px-3 py-1.5 rounded-full border border-border/60 shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
-                  Service Active &mdash; New Delhi
+                  Service Active &mdash; South Delhi
                 </span>
               </div>
             </div>

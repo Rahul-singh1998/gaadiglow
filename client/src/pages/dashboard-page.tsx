@@ -1,5 +1,5 @@
 import { useAuth } from "@/hooks/use-auth";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import BookingHistory from "@/components/dashboard/booking-history";
 import ProfileSection from "@/components/dashboard/profile-section";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

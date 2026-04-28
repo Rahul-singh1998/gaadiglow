@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: 
 Disallow: /shared
 Disallow: /.git
-Sitemap: https://www.gaadiglow.com/
+Sitemap: https://gaadiglow.com/sitemap.xml

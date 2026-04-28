@@ -5,7 +5,8 @@ import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
 import { z } from "zod";
 import { Redirect } from "wouter";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
+import { CalendarCheck, Truck, ShieldCheck, Star, StarHalf } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -210,7 +211,7 @@ export default function AuthPage() {
             <div className="space-y-6 mb-10">
               <div className="flex items-start">
                 <div className="bg-white/20 p-2 rounded-full mr-4">
-                  <i className="fas fa-calendar-check text-accent"></i>
+                  <CalendarCheck className="text-accent h-4 w-4" />
                 </div>
                 <div>
                   <h4 className="font-bold text-lg">Easy Booking</h4>
@@ -220,7 +221,7 @@ export default function AuthPage() {
               
               <div className="flex items-start">
                 <div className="bg-white/20 p-2 rounded-full mr-4">
-                  <i className="fas fa-truck text-accent"></i>
+                  <Truck className="text-accent h-4 w-4" />
                 </div>
                 <div>
                   <h4 className="font-bold text-lg">Doorstep Service</h4>
@@ -230,7 +231,7 @@ export default function AuthPage() {
               
               <div className="flex items-start">
                 <div className="bg-white/20 p-2 rounded-full mr-4">
-                  <i className="fas fa-shield-alt text-accent"></i>
+                  <ShieldCheck className="text-accent h-4 w-4" />
                 </div>
                 <div>
                   <h4 className="font-bold text-lg">Quality Guarantee</h4>
@@ -242,12 +243,12 @@ export default function AuthPage() {
             <div className="mt-auto pt-10">
               <div className="flex items-center">
                 <div className="font-bold mr-2">4.8/5</div>
-                <div className="text-yellow-400">
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star-half-alt"></i>
+                <div className="text-yellow-400 flex">
+                  <Star className="h-4 w-4 fill-yellow-400" />
+                  <Star className="h-4 w-4 fill-yellow-400" />
+                  <Star className="h-4 w-4 fill-yellow-400" />
+                  <Star className="h-4 w-4 fill-yellow-400" />
+                  <StarHalf className="h-4 w-4 fill-yellow-400" />
                 </div>
                 <div className="ml-2 opacity-80">(2000+ reviews)</div>
               </div>

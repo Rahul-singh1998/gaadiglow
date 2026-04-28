@@ -110,11 +110,17 @@ export const SERVICES: Service[] = [
     subtitle: "Beyond Basic — Shine & Protection Combined",
     description: "Includes Everything in Basic Wash, plus:",
     features: [
-      "Engine Bay Cleaning (done safely by protecting battery area)",
-      "Body Polishing for Enhanced Shine",
-      "Glass Polishing for Clear Visibility",
-      "Logo Dust Removal for Neat Finish",
-      "Tyre Polish & Dressing for Rich Black look",
+      "Full Interior Vacuum (seats, carpets & boot)",
+      "Carpet / Floor Mat Shampooing & Cleaning",
+      "Dashboard, Trims & Panel Polishing",
+      "Door Panels, Console & AC Vent Cleaning",
+      "Safe Engine Bay Cleaning (battery area protected)",
+      "Body & Glass Polishing for Enhanced Shine and Clear Visibility",
+      "Underbody Cleaning",
+      "Plastic Restoration Polish for Faded Parts",
+      "Door Edges, Fuel Lid, Dicky Jamb Cleaning & Logo Detailing",
+      "Tyre Polish & Dressing for Rich Black Look",
+      "Free Paper Mats & Car Perfume Spray"
     ],
     price: [
       { mrp: 999, final: 799 },   // Hatchback

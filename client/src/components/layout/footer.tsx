@@ -1,4 +1,6 @@
 import { Link } from "wouter";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { FaInstagram, FaLinkedin, FaFacebook, FaYoutube } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -20,16 +22,16 @@ export default function Footer() {
             {/* Social icons */}
             <div className="flex items-center gap-4 mb-6">
               <a href="https://www.instagram.com/gaadiglow?igsh=NTN2Mzl6c3F2eWlm" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <i className="fab fa-instagram text-2xl hover:text-pink-400 transition-colors"></i>
+                <FaInstagram className="text-2xl hover:text-pink-400 transition-colors" />
               </a>
               <a href="https://www.linkedin.com/in/gaadi-glow-276761375?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <i className="fab fa-linkedin text-2xl hover:text-blue-400 transition-colors"></i>
+                <FaLinkedin className="text-2xl hover:text-blue-400 transition-colors" />
               </a>
               <a href="https://www.facebook.com/share/14wBSc4YEt/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <i className="fab fa-facebook text-2xl hover:text-blue-400 transition-colors"></i>
+                <FaFacebook className="text-2xl hover:text-blue-400 transition-colors" />
               </a>
               <a href="https://youtube.com/@gaadiglow?si=bSMZU8HmnAc8Ca83" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                <i className="fab fa-youtube text-2xl hover:text-red-500 transition-colors"></i>
+                <FaYoutube className="text-2xl hover:text-red-500 transition-colors" />
               </a>
             </div>
 
@@ -49,7 +51,7 @@ export default function Footer() {
             <h4 className="font-bold text-lg mb-5">Contact Us</h4>
             <div className="space-y-4 text-sm">
               <div className="flex items-start gap-3">
-                <i className="fas fa-map-marker-alt mt-0.5 text-yellow-400"></i>
+                <MapPin className="mt-0.5 text-yellow-400 shrink-0" size={16} />
                 <div>
                   <p className="font-medium">Address</p>
                   <p className="opacity-80">KalKaji, DDA Flats, J3</p>
@@ -57,14 +59,14 @@ export default function Footer() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <i className="fas fa-phone mt-0.5 text-yellow-400"></i>
+                <Phone className="mt-0.5 text-yellow-400 shrink-0" size={16} />
                 <div>
                   <p className="font-medium">Phone</p>
                   <a href="tel:+917800800122" className="opacity-80 hover:underline">7800800122</a>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <i className="fas fa-envelope mt-0.5 text-yellow-400"></i>
+                <Mail className="mt-0.5 text-yellow-400 shrink-0" size={16} />
                 <div>
                   <p className="font-medium">Email</p>
                   <p className="opacity-80">gaadiglow@gmail.com</p>
@@ -77,7 +79,7 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-5">Our Availability</h4>
             <div className="flex items-start gap-3 text-sm">
-              <i className="fas fa-clock mt-0.5 text-yellow-400"></i>
+              <Clock className="mt-0.5 text-yellow-400 shrink-0" size={16} />
               <div>
                 <p className="font-medium">Working Hours</p>
                 <p className="opacity-80">Monday to Sunday</p>

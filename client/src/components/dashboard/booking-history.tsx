@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Booking } from "@shared/schema";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, CalendarX } from "lucide-react";
 import { format } from "date-fns";
 
 export default function BookingHistory() {
@@ -32,7 +32,7 @@ export default function BookingHistory() {
     return (
       <div className="text-center py-16 px-4">
         <div className="mb-4 text-muted-foreground">
-          <i className="fas fa-calendar-times text-4xl"></i>
+          <CalendarX className="text-4xl h-10 w-10 mx-auto" />
         </div>
         <h3 className="text-xl font-medium mb-2">No bookings yet</h3>
         <p className="text-muted-foreground mb-6">You haven't made any car wash bookings yet.</p>

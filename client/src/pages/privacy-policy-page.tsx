@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -108,6 +108,7 @@ export default function PrivacyPolicyPage() {
           name="description"
           content="Read GaadiGlow's privacy policy for our doorstep car cleaning service. Learn how we collect, use, and protect your personal information."
         />
+        <link rel="canonical" href="https://gaadiglow.com/privacy-policy" />
       </Helmet>
 
       <div className="min-h-screen bg-background">

@@ -198,23 +198,11 @@ export default function FaqSection() {
     }
   }
 
-  const faqSchema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  });
-
   return (
     <section
       className="relative py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-muted/40 to-background"
       aria-labelledby="faq-heading"
     >
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
-
       <div className="container mx-auto max-w-6xl">
 
         {/* Section header */}

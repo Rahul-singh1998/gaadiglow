@@ -45,6 +45,16 @@ const testimonials = [
   },
   {
     id: 5,
+    name: "Rahul Singh",
+    location: "Hauz Khas, New Delhi",
+    rating: 5.0,
+    text: "Fast and efficient service, friendly team, and my car feels great to drive again. Happy with the quick turnaround.",
+    initials: "RS",
+    bgColor: "from-indigo-500 to-indigo-600",
+    image: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/rahul_singh_xcnuab.webp",
+  },
+  {
+    id: 6,
     name: "Vikram Patel",
     location: "Dwarka, New Delhi",
     rating: 4.5,
@@ -54,7 +64,7 @@ const testimonials = [
     image: "https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto/v1775118577/vikram_patel_cimyfs",
   },
   {
-    id: 6,
+    id: 7,
     name: "Simran Kaur",
     location: "Greater Kailash, New Delhi",
     rating: 5.0,

@@ -1,4 +1,4 @@
-﻿import { Helmet } from "react-helmet";
+﻿import { Helmet } from "react-helmet-async";
 import BookingForm from "@/components/booking/booking-form";
 import { useState } from "react";
 
@@ -46,6 +46,7 @@ export default function BookingPage() {
         <meta name="twitter:title" content="Book Car Wash at Home - GaadiGlow" />
         <meta name="twitter:description" content="Doorstep car cleaning in Delhi NCR. Book via WhatsApp in 60 seconds!" />
         <meta name="twitter:image" content="https://res.cloudinary.com/daeobjgd0/image/upload/f_auto,q_auto,w_1200,h_630,c_fill/v1765862042/main1_pnywak.png" />
+        <link rel="canonical" href="https://gaadiglow.com/booking" />
       </Helmet>
 
       <main className="relative min-h-screen">
@@ -63,10 +64,9 @@ export default function BookingPage() {
                 Book in 30 Seconds
               </span>
               <h1 className="font-bold text-3xl md:text-5xl mb-4 leading-tight text-foreground">
-                Booking Form
+                Book Your Doorstep Car Wash
               </h1>
-              <p className="text-muted-foreground max-w-md mx-auto text-sm md:text-[15px] leading-relaxed">
-                Need a special car cleaning service? We are happy to fulfil every request to exceed your expectations.
+              <p className="text-muted-foreground max-w-md mx-auto text-sm md:text-[15px] leading-relaxed">No advance payment. We bring everything to you.
               </p>
             </header>
 
