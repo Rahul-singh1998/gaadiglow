@@ -1,9 +1,9 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 const HomePage = lazy(() => import("@/pages/home-page"));
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
@@ -14,9 +14,23 @@ const TermsPage = lazy(() => import("@/pages/terms-page"));
 const PrivacyPolicyPage = lazy(() => import("@/pages/privacy-policy-page"));
 const BookingPage = lazy(() => import("@/pages/booking-page"));
 
+/**
+ * ScrollToTop: Resets page scroll position to top on route navigation.
+ * Prevents scroll jump when navigating between pages.
+ * Ensures smooth, predictable UX on page transitions.
+ */
+function ScrollToTop() {
+  const [location] = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+  return null;
+}
+
 function Router() {
   return (
     <Suspense fallback={<div className="flex-grow" />}>
+      <ScrollToTop />
       <Switch>
         <Route path="/" component={HomePage} />
         <Route path="/booking" component={BookingPage} />

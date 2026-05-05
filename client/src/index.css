@@ -1,3 +1,39 @@
+/**
+ * ⚡ PERFORMANCE & SMOOTHNESS OPTIMIZATIONS
+ * Prevent scroll jank, layout shifts, and janky navigation
+ */
+
+/* Disable scroll restoration on navigation to prevent competing scroll events */
+html {
+  scroll-behavior: smooth;
+  overflow-y: scroll; /* Reserve scrollbar space to prevent layout shift */
+}
+
+/* Smooth, instant scroll without animation interference */
+body {
+  /* Prevent FOUC (Flash of Unstyled Content) and layout shift */
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Prevent layout shift from horizontal scrollbar appearing/disappearing */
+* {
+  scrollbar-gutter: stable;
+}
+
+/* Ensure inputs and buttons don't cause scroll jumps on focus */
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  scroll-padding-top: 2rem;
+}
+
+/* Optimize form rendering performance */
+form {
+  contain: layout style paint;
+}
+
 /* Premium booking form background and glass utilities */
 .booking-bg-gradient {
   @apply bg-gradient-to-br from-blue-50 via-purple-50 to-white;

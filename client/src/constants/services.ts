@@ -89,8 +89,8 @@ export const SERVICES: Service[] = [
       "Alloy Wheel & Tyre Cleaning with Brush",
     ],
     price: [
-      { mrp: 500, final: 399 },  // Hatchback
-      { mrp: 625, final: 499 },  // Sedan / Compact SUV
+      { mrp: 625, final: 499 },  // Hatchback
+      { mrp: 750, final: 599 },  // Sedan / Compact SUV
       { mrp: 750, final: 599 },  // Standard SUV
       { mrp: 875, final: 699 },  // Full-size SUV
     ],
@@ -157,23 +157,23 @@ export const SERVICES: Service[] = [
       "Full interior detailing for a fresh finish",
     ],
     price: [
-      { mrp: 1799, final: 1399 },  // Hatchback (leather — default)
-      { mrp: 1999, final: 1599 },  // Sedan
+      { mrp: 1879, final: 1499 },  // Hatchback (leather — default)
+      { mrp: 2249, final: 1799 },  // Sedan
       { mrp: 2249, final: 1799 },  // Standard SUV
       { mrp: 2749, final: 2199 },  // Large SUV
     ],
     priceBySeatType: {
       leather: [
-        { mrp: 1799, final: 1399 },
-        { mrp: 1999, final: 1599 },
+        { mrp: 1879, final: 1499 },
+        { mrp: 2249, final: 1799 },
         { mrp: 2249, final: 1799 },
         { mrp: 2749, final: 2199 },
       ],
       fabric: [
-        { mrp: 2199, final: 1699 },
-        { mrp: 2399, final: 1899 },
-        { mrp: 2599, final: 2099 },
-        { mrp: 3149, final: 2499 },
+        { mrp: 2119, final: 1699 },
+        { mrp: 2609, final: 2099 },
+        { mrp: 2609, final: 2099 },
+        { mrp: 3119, final: 2499 },
       ],
     },
     duration: "1.5 – 3 hrs",

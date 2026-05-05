@@ -270,7 +270,6 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
             <Input
               id="vehicle-model"
               placeholder="e.g. Rahul Sharma"
-              autoFocus
               className={inputBase}
               value={bookingData.vehicleModel}
               onChange={(e) => updateBookingData({ vehicleModel: e.target.value })}
@@ -651,7 +650,7 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
             </Link>{" "}
             as set out by the user agreement. <span className="text-destructive">*</span>
             <p className="text-xs text-muted-foreground leading-snug mt-0.5">
-              Luxury vehicles may be charged an additional ₹100 for enhanced care.
+            Luxury sedans incur an additional ₹100. Large luxury sedans are charged at Large SUV rates. Luxury vehicles may incur an additional ₹100 for enhanced care.
             </p>
           </Label>
         </div>
