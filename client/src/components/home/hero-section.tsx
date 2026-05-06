@@ -13,13 +13,25 @@ const services = [
 
 export default function HeroSection() {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+  const [enableRotation, setEnableRotation] = useState(false);
 
   useEffect(() => {
+    const startDelay = setTimeout(() => {
+      setEnableRotation(true);
+    }, 3000);
+
+    return () => clearTimeout(startDelay);
+  }, []);
+
+  useEffect(() => {
+    if (!enableRotation) return;
+
     const interval = setInterval(() => {
       setCurrentServiceIndex((prev) => (prev + 1) % services.length);
-    }, 2500);
+    }, 3500);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [enableRotation]);
 
   return (
     <section className="relative overflow-hidden text-white min-h-[520px] md:min-h-[580px]">
@@ -31,7 +43,7 @@ export default function HeroSection() {
 
       {/* ── Top fade (mobile only) — darkens behind H1 for clean contrast ——— */}
       <div className="absolute inset-x-0 top-0 h-52 z-10 pointer-events-none bg-gradient-to-b from-black/40 to-transparent md:hidden" />
-    
+
       {/* ── Bottom fade so dots contrast well ───────────────────────────── */}
       <div className="absolute inset-x-0 bottom-0 h-20 z-10 pointer-events-none bg-gradient-to-t from-black/50 to-transparent" />
 
@@ -44,7 +56,7 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-white">
-          Doorstep Car Wash <br />
+            Doorstep Car Wash <br />
             <span className="text-primary">Service in Delhi</span>
           </h1>
 
@@ -94,14 +106,14 @@ export default function HeroSection() {
               className="inline-flex items-center justify-center gap-1.5 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm px-6 py-3 text-base font-medium text-white transition-all duration-200 hover:bg-white/20 hover:border-white/60"
             >
               View Services
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
             </a>
           </div>
 
           {/* Trust badges */}
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/80">
             <span className="flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
               4.8/5 Rating
             </span>
             <span className="text-white/40">·</span>
