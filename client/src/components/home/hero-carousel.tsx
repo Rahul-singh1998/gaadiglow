@@ -119,46 +119,29 @@ export default function HeroCarousel() {
           className="flex h-full transition-transform duration-700 ease-in-out"
           style={{ width: `${N * 100}%`, transform: `translateX(-${current * (100 / N)}%)` }}
         >
-          {SLIDES.map((slide, i) => {
-            const isNearby =
-              i === current ||
-              i === (current - 1 + N) % N ||
-              i === (current + 1) % N;
-
-            if (!isNearby) {
-              return (
-                <div
-                  key={i}
-                  className="flex-shrink-0 h-full"
-                  style={{ width: `${100 / N}%` }}
-                />
-              );
-            }
-
-            return (
-              <picture
-                key={i}
-                className="flex-shrink-0 h-full block"
-                style={{ width: `${100 / N}%` }}
-              >
-                {/* Mobile: portrait 3:4 crop, per-slide gravity keeps subject in frame */}
-                <source
-                  media="(max-width: 767px)"
-                  srcSet={toMobileSrc(slide.id, slide.mobileGravity)}
-                />
-                {/* Desktop: standard 16:9 crop */}
-                <img
-                  src={toDesktopSrc(slide.id)}
-                  alt={slide.alt}
-                  draggable={false}
-                  loading={i === 0 ? "eager" : "lazy"}
-                  decoding={i === 0 ? "sync" : "async"}
-                  fetchPriority={i === 0 ? "high" : "low"}
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-            );
-          })}
+          {SLIDES.map((slide, i) => (
+            <picture
+              key={i}
+              className="flex-shrink-0 h-full block"
+              style={{ width: `${100 / N}%` }}
+            >
+              {/* Mobile: portrait 3:4 crop, per-slide gravity keeps subject in frame */}
+              <source
+                media="(max-width: 767px)"
+                srcSet={toMobileSrc(slide.id, slide.mobileGravity)}
+              />
+              {/* Desktop: standard 16:9 crop */}
+              <img
+                src={toDesktopSrc(slide.id)}
+                alt={slide.alt}
+                draggable={false}
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding={i === 0 ? "sync" : "async"}
+                fetchPriority={i === 0 ? "high" : "low"}
+                className="w-full h-full object-cover"
+              />
+            </picture>
+          ))}
         </div>
       </div>
 
@@ -175,10 +158,11 @@ export default function HeroCarousel() {
             aria-selected={i === current}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => goTo(i)}
-            className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${i === current
-              ? "w-7 bg-white"
-              : "w-2.5 bg-white/50 hover:bg-white/80"
-              }`}
+            className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${
+              i === current
+                ? "w-7 bg-white"
+                : "w-2.5 bg-white/50 hover:bg-white/80"
+            }`}
           />
         ))}
       </div>
