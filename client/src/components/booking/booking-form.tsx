@@ -650,7 +650,7 @@ Vehicle Type: ${vehicleLabel}${seatTypeLine}`
             </Link>{" "}
             as set out by the user agreement. <span className="text-destructive">*</span>
             <p className="text-xs text-muted-foreground leading-snug mt-0.5">
-            Luxury sedans incur an additional ₹100. Large luxury sedans are charged at Large SUV rates. Luxury vehicles may incur an additional ₹100 for enhanced care.
+            Certain luxury vehicles may incur an additional ₹100 charge for enhanced care and handling, while large luxury sedans will be charged at Large SUV rates.
             </p>
           </Label>
         </div>

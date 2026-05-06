@@ -36,12 +36,7 @@ export default function HeroSection() {
       <div className="absolute inset-x-0 bottom-0 h-20 z-10 pointer-events-none bg-gradient-to-t from-black/50 to-transparent" />
 
       {/* ── Hero content ────────────────────────────────────────────────── */}
-      <motion.div
-        className="relative z-10 container mx-auto px-4 md:px-8 flex items-center min-h-[520px] md:min-h-[580px] py-12"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
+      <div className="relative z-10 container mx-auto px-4 md:px-8 flex items-center min-h-[520px] md:min-h-[580px] py-12">
         <motion.div
           className="max-w-xl"
           initial={{ opacity: 0, y: 20 }}
@@ -115,7 +110,7 @@ export default function HeroSection() {
             <span>No Advance Payment</span>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Decorative floating orbs */}
       <div className="absolute top-4 right-4 md:right-20 w-24 h-24 bg-accent opacity-10 rounded-full z-10 pointer-events-none" />
