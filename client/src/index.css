@@ -3,10 +3,9 @@
  * Prevent scroll jank, layout shifts, and janky navigation
  */
 
-/* Disable scroll restoration on navigation to prevent competing scroll events */
+/* Reserve scrollbar space to prevent layout shift on route transitions */
 html {
-  scroll-behavior: smooth;
-  overflow-y: scroll; /* Reserve scrollbar space to prevent layout shift */
+  overflow-y: scroll;
 }
 
 /* Smooth, instant scroll without animation interference */
@@ -27,6 +26,15 @@ textarea:focus,
 select:focus,
 button:focus {
   scroll-padding-top: 2rem;
+}
+
+/* Enable smooth scrolling only for anchor navigation, not route changes */
+html {
+  scroll-behavior: auto;
+}
+
+html.smooth-scroll {
+  scroll-behavior: smooth;
 }
 
 /* Optimize form rendering performance */

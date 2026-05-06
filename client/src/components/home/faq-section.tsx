@@ -384,7 +384,7 @@ export default function FaqSection() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-2">
               <a
-                href="https://wa.me/917800800122?text=Hi!%20I%20have%20a%20question%20about%20GaadiGlow."
+                href="https://wa.me/917800800122?text=Hi%21%20I%E2%80%99d%20like%20to%20book%20a%20car%20cleaning%20service%20with%20GaadiGlow!"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-[#25D366] text-white font-semibold text-sm shadow-lg shadow-green-400/20 hover:bg-[#1ebe5d] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"

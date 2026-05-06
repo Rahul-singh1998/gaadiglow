@@ -76,7 +76,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-5">
             {/* Primary CTA */}
             <a
-              href="https://wa.me/917800800122?text=Hi!%20I%20have%20a%20question%20about%20GaadiGlow."
+              href="https://wa.me/917800800122?text=Hi%21%20I%E2%80%99d%20like%20to%20book%20a%20car%20cleaning%20service%20with%20GaadiGlow!"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-green-500 via-green-400 to-emerald-500 px-7 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:from-green-600 hover:to-emerald-600 hover:shadow-green-400/40 hover:scale-105"
             >

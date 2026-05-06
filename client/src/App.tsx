@@ -3,7 +3,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect } from "react";
 const HomePage = lazy(() => import("@/pages/home-page"));
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
@@ -16,20 +16,28 @@ const BookingPage = lazy(() => import("@/pages/booking-page"));
 
 /**
  * ScrollToTop: Resets page scroll position to top on route navigation.
- * Prevents scroll jump when navigating between pages.
- * Ensures smooth, predictable UX on page transitions.
+ * Uses useLayoutEffect to scroll BEFORE paint, preventing visible jumps.
+ * Ensures instant scroll with no animation.
  */
 function ScrollToTop() {
   const [location] = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  useLayoutEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant" as ScrollBehavior,
+    });
   }, [location]);
   return null;
 }
 
 function Router() {
   return (
-    <Suspense fallback={<div className="flex-grow" />}>
+    <Suspense
+      fallback={
+        <div className="min-h-[100vh] w-full bg-background" />
+      }
+    >
       <ScrollToTop />
       <Switch>
         <Route path="/" component={HomePage} />
@@ -43,6 +51,18 @@ function Router() {
 }
 
 function App() {
+  // Disable browser native scroll restoration to prevent jumps on route change
+  useLayoutEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  // Defensive initial scroll reset on app mount
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

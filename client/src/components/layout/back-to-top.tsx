@@ -1,7 +1,7 @@
 import { FaWhatsapp } from "react-icons/fa";
 
 const WA_LINK =
-  "https://wa.me/917800800122?text=Hi!%20I'd%20like%20to%20book%20a%20car%20wash%20with%20GaadiGlow.";
+  "https://wa.me/917800800122?text=Hi%21%20I%E2%80%99d%20like%20to%20book%20a%20car%20cleaning%20service%20with%20GaadiGlow!";
 
 export default function WhatsAppFAB() {
   return (
