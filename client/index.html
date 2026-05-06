@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <meta property="og:site_name" content="GaadiGlow">
-    <meta property="og:title" content="Your Car, Our Care">
-    <title>GaadiGlow - Professional Car Wash Services</title>
-    <meta name="description" content="Professional mobile car wash services at your doorstep. Book your car wash appointment with GaadiGlow today!" />
-    <link rel="icon" href="/favicon/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/favicon/site.webmanifest">
-    <!-- Preload LCP hero image — mobile (portrait 3:4) -->
-    <link rel="preload" as="image" fetchpriority="high"
-      href="https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto,w_700,ar_3:4,c_fill,g_face/car-cleaning-india-gate-delhi"
-      media="(max-width: 767px)" />
-    <!-- Preload LCP hero image — desktop (16:9) -->
-    <link rel="preload" as="image" fetchpriority="high"
-      href="https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto,w_1400,ar_16:9,c_fill/car-cleaning-india-gate-delhi"
-      media="(min-width: 768px)" />
-    <script type="application/ld+json">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <meta property="og:site_name" content="GaadiGlow">
+  <meta property="og:title" content="Your Car, Our Care">
+  <title>GaadiGlow - Professional Car Wash Services</title>
+  <meta name="description"
+    content="Professional mobile car wash services at your doorstep. Book your car wash appointment with GaadiGlow today!" />
+  <link rel="icon" href="/favicon/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/favicon/site.webmanifest">
+  <!-- Preload LCP hero image — mobile (portrait 3:4) -->
+  <link rel="preload" as="image" fetchpriority="high"
+    href="https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto,w_700,ar_3:4,c_fill,g_face/car-cleaning-india-gate-delhi"
+    media="(max-width: 767px)" />
+  <!-- Preload LCP hero image — desktop (16:9) -->
+  <link rel="preload" as="image" fetchpriority="high"
+    href="https://res.cloudinary.com/dt5lgnfub/image/upload/f_auto,q_auto,w_1400,ar_16:9,c_fill/car-cleaning-india-gate-delhi"
+    media="(min-width: 768px)" />
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -28,17 +30,29 @@
       "url": "https://gaadiglow.com"
     }
     </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <!-- Google tag (gtag.js) - at end of body to avoid crawler false positives -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17372217201"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-17372217201');
-    </script>
-  </body>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  <!-- Google tag (gtag.js) - at end of body to avoid crawler false positives -->
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17372217201';
+        script.async = true;
+        document.body.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+
+        gtag('js', new Date());
+        gtag('config', 'AW-17372217201');
+      }, 3000);
+    });
+  </script>
+</body>
+
 </html>
