@@ -34,7 +34,7 @@ export default function HeroSection() {
   }, [enableRotation]);
 
   return (
-    <section className="relative overflow-hidden text-white min-h-[520px] md:min-h-[580px]">
+    <section className="relative overflow-hidden text-white h-[520px] md:h-[580px]">
       {/* ── Full-width background carousel ──────────────────────────────── */}
       <HeroCarousel />
 
@@ -48,7 +48,7 @@ export default function HeroSection() {
       <div className="absolute inset-x-0 bottom-0 h-20 z-10 pointer-events-none bg-gradient-to-t from-black/50 to-transparent" />
 
       {/* ── Hero content ────────────────────────────────────────────────── */}
-      <div className="relative z-10 container mx-auto px-4 md:px-8 flex items-center min-h-[520px] md:min-h-[580px] py-12">
+      <div className="relative z-10 container mx-auto px-4 md:px-8 flex items-center h-[520px] md:h-[580px] py-12">
         <motion.div
           className="max-w-xl"
           initial={{ opacity: 0, y: 20 }}
