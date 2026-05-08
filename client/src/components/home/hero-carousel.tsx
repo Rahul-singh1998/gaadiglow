@@ -10,7 +10,7 @@ const CDN = "https://res.cloudinary.com/dt5lgnfub/image/upload";
  * - g_center → predictable centre crop (fallback)
  */
 function toMobileSrc(publicId: string, gravity = "g_face"): string {
-  return `${CDN}/f_auto,q_auto:good,w_960,ar_3:4,c_fill,${gravity}/${publicId}`;
+  return `${CDN}/f_auto,q_auto:good,dpr_auto,w_480,ar_3:4,c_fill,${gravity}/${publicId}`;
 }
 
 /** Desktop: full-width 16:9, capped at 1400 px to avoid oversized downloads. */
