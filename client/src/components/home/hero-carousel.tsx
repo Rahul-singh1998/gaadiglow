@@ -136,7 +136,7 @@ export default function HeroCarousel() {
                 alt={slide.alt}
                 draggable={false}
                 loading={i === 0 ? "eager" : "lazy"}
-                decoding="async" 
+                decoding={i === 0 ? "sync" : "async"}
                 fetchPriority={i === 0 ? "high" : "low"}
                 className="w-full h-full object-cover"
               />
