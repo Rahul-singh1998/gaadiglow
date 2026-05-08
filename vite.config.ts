@@ -10,9 +10,15 @@ export default defineConfig({
     },
   },
   root: "./client",
+
   build: {
     outDir: "../dist",
     emptyOutDir: true,
+    modulePreload: {
+      resolveDependencies: (url, deps) => {
+        return deps.filter(dep => !dep.includes("framer-motion"));
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: {
